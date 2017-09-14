@@ -17,6 +17,8 @@ export default function reduce(state = initialState, action = {}) {
             return {...state, status: 'unavailable'};
         case types.FETCH_PUBLIC_NEWS_FAILED_NO_AUTH:
             return {...state, status: 'no_auth'};
+        case types.REFRESH_NEWS:
+            return {...state, status: 'refreshing'};
         default:
             return state;
     }

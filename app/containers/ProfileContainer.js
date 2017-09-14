@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {
     ActivityIndicator,
+    AppState,
     Dimensions,
     FlatList,
     Image,
@@ -15,6 +16,7 @@ import {
 import {connect} from 'react-redux';
 import {Divider, SideMenu, Icon} from 'react-native-elements';
 import Menu, {MENU_PROFILE, MENU_NEWS} from '../components/Menu';
+import {refreshNews} from '../stores/news/actions';
 
 const MAX_WIDTH = Dimensions.get('window').width * 0.9;
 
@@ -28,9 +30,26 @@ class ProfileContainer extends Component {
 
         this.state = {
             isOpen: false,
-            chosen: MENU_NEWS
+            chosen: MENU_NEWS,
+            appState: AppState.currentState
         }
     }
+
+    componentWillMount() {
+        AppState.addEventListener('change', this._handleAppStateChange);
+    }
+
+    componentWillUnmount() {
+        AppState.removeEventListener('change', this._handleAppStateChange);
+    }
+
+    _handleAppStateChange = (nextAppState) => {
+        if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+            this.props.dispatch(refreshNews());
+        }
+
+        this.setState({appState: nextAppState});
+    };
 
     _onPress() {
 
@@ -67,11 +86,6 @@ class ProfileContainer extends Component {
             return this.renderNews();
     }
 
-    _onEndReached = () => {
-        if (this.props.product_list[this.props.product.current_category].isLoading === false)
-            this.props.dispatch(loadMoreProducts());
-    };
-
     _renderItem = ({item}) => (
         <View style={{flex: 1, width: MAX_WIDTH, marginBottom: 15}}>
             <Text
@@ -90,10 +104,18 @@ class ProfileContainer extends Component {
         </View>
     );
 
+    _keyExtractor = (item) => item.id ? item.id : item.creationDate;
     renderNews() {
         let message_list = this.props.news.data;
+        message_list.sort(function(a, b) {
+            if (!a.timestamp || !b.timestamp)
+                return 0;
+
+            return b.timestamp - a.timestamp;
+        });
         let status = this.props.news.status;
-        let loading = status !== 'local' && status !== 'online';
+        let loading = status !== 'local' && status !== 'online' && status !== 'refreshing';
+        let small_loading = status === 'refreshing' && message_list.length > 0;
         return (
             <View style={styles.container}>
                 <StatusBar hidden={true}/>
@@ -114,17 +136,34 @@ class ProfileContainer extends Component {
                 {loading ?
                     <View style={{
                         flex: 1,
-                        backgroundColor: '#F5FCFF',
+                        backgroundColor: 'white',
                         justifyContent: 'center',
                         alignItems: 'center'
                     }}>
                         <ActivityIndicator animating={true}/>
                     </View>
                     :
-                    <FlatList
-                        data={message_list}
-                        renderItem={this._renderItem}
-                    />
+                    <View>
+                        {small_loading ?
+                            <View style={{
+                                height: 50,
+                                backgroundColor: 'white',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                <ActivityIndicator animating={true}/>
+                            </View>
+                            :
+                            null
+                        }
+                        <FlatList
+                            data={message_list}
+                            renderItem={this._renderItem}
+                            refreshing={this.props.news.state === 'refreshing'}
+                            onRefresh={() => this.props.dispatch(refreshNews())}
+                            keyExtractor={this._keyExtractor}
+                        />
+                    </View>
                 }
             </View>
         )
@@ -261,7 +300,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF'
+        backgroundColor: 'white'
     },
     centering: {
         alignItems: 'center',

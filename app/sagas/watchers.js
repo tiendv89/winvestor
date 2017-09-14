@@ -24,4 +24,8 @@ export const watchFetchPublicNews = function* () {
 
 export const watchReceiveNewMessages = function* () {
     yield takeLatest(news_types.RECEIVE_NEW_MESSAGES, news_sagas.receiveNewMessages);
-}
+};
+
+export const watchRefreshNews = function* () {
+    yield takeLatest(news_types.REFRESH_NEWS, news_sagas.fetchPublicNews);
+};
