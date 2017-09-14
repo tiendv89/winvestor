@@ -31,7 +31,7 @@ class RootWithNavigationState extends Component {
         this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow.bind(this));
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide.bind(this));
 
-        NetInfo.isConnected.addEventListener('change', this.onConnectionChange);
+        NetInfo.isConnected.addEventListener('connectionChange', this.onConnectionChange);
         BackHandler.addEventListener('hardwareBackPress', this.onBackPressed);
     }
 

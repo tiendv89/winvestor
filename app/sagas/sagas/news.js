@@ -4,7 +4,7 @@ import * as types from '../../stores/news/action-types';
 import * as api from '../../api';
 import * as selectors from "../../stores/selectors";
 
-export const fetchPublicNews = function* ({height}) {
+export const fetchPublicNews = function* () {
     try {
         let profile = yield select(selectors.getProfile);
         console.log(profile);
@@ -29,5 +29,24 @@ export const fetchPublicNews = function* ({height}) {
         }
     } catch (error) {
         yield put({type: types.FETCH_PUBLIC_NEWS_FAILED});
+    }
+};
+
+
+export const receiveNewMessages = function* ({data}) {
+    try {
+        if (Array.isArray(data)) {
+            let current_news = yield select(selectors.getCurrentNews);
+            data.forEach(function(item) {
+                let index = current_news.findIndex(x => x.id ? x.id === item.id : false)
+                if (index === -1) {
+                    current_news.push(item);
+                }
+            });
+
+            yield put({type: types.FETCH_PUBLIC_NEWS_SUCCESS, data: current_news});
+        }
+    } catch (error) {
+
     }
 };

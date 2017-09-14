@@ -2,7 +2,7 @@ import config from './config';
 
 const FETCH_TIMEOUT = 60000;
 const UPLOAD_TIMEOUT = 60000;
-const PRINT_API_LOG = config.env !== 'production';
+const PRINT_API_LOG = false;
 
 export const get = async function(url) {
     return _fetch(url, {

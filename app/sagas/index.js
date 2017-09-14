@@ -8,6 +8,7 @@ const startForeman = function* startForeman() {
     yield fork(watchers.watchLoginRequest);
     yield fork(watchers.watchLoginRequestWithToken);
     yield fork(watchers.watchFetchPublicNews);
+    yield fork(watchers.watchReceiveNewMessages);
 };
 
 export default startForeman;

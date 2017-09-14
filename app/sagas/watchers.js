@@ -16,8 +16,12 @@ export const watchLoginRequest = function* () {
 
 export const watchLoginRequestWithToken = function* () {
     yield takeLatest(auth_types.ON_LOGIN_REQUEST_WITH_TOKEN, auth_sagas.onLoginRequestWithToken);
-}
+};
 
 export const watchFetchPublicNews = function* () {
     yield takeLatest(news_types.FETCH_PUBLIC_NEWS, news_sagas.fetchPublicNews);
 };
+
+export const watchReceiveNewMessages = function* () {
+    yield takeLatest(news_types.RECEIVE_NEW_MESSAGES, news_sagas.receiveNewMessages);
+}

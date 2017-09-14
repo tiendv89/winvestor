@@ -7,6 +7,11 @@ import {NavigationActions} from 'react-navigation';
 import {connect} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import {onLoginRequest, onLoginRequestWithToken, onLoadTokenFailed} from '../stores/auth/actions';
+import {receiveNewMessages} from '../stores/news/actions';
+import Pusher from 'pusher-js/react-native';
+import * as api from '../api';
+
+Pusher.logToConsole = true;
 
 class LoginContainer extends Component {
     static navigationOptions = {
@@ -20,6 +25,8 @@ class LoginContainer extends Component {
             password: '',
             loginInProgress: false
         }
+
+        this.subscribePNChannel = this.subscribePNChannel.bind(this);
     }
 
     componentWillMount() {
@@ -40,17 +47,47 @@ class LoginContainer extends Component {
             if (Platform.OS === 'ios') {
                 // iOS must wait for rego
                 console.log("Hey zoo I listen");
-                RNPusherPushNotifications.on('registered', this.subscribePrivateChannel);
+                RNPusherPushNotifications.on('registered', this.subscribePNChannel);
             } else {
                 // Android is immediate
-                this.subscribePrivateChannel();
+                this.subscribePNChannel();
             }
+
+            this.initPusher().then(_token => {
+                console.log(_token);
+                let userId = nextProps.auth.profile._id;
+                let channelId = 'private-' + userId;
+                let token = nextProps.auth.profile.accessToken;
+                let authEndpoint = 'https://winvestor.vn/api/private-channel/' + userId + '/' + token;
+                console.log(authEndpoint);
+                // Pusher private channel
+                this.pusher = new Pusher('2912f2814f5e00f8b82d', {
+                    cluster: 'ap1',
+                    authEndpoint: authEndpoint,
+                    auth: {
+                        params: {
+                            _token: _token.data.token,
+                        }
+                    }
+                });
+
+                let channel = this.pusher.subscribe(channelId);
+                channel.bind('privateStockEvent', function(data) {
+                    console.log(data);
+                    this.props.dispatch(receiveNewMessages(data));
+                }.bind(this));
+            });
 
             this.props.dispatch(NavigationActions.navigate({routeName: 'Profile'}));
         }
     }
 
-    subscribePrivateChannel() {
+    async initPusher() {
+        let _token = api.get('https://winvestor.vn/api/token');
+        return _token;
+    }
+
+    subscribePNChannel() {
         let channelId = this.props.auth.profile._id;
         console.log('Subscribe to channel: ' + channelId);
         // Subscribe to push notifications
