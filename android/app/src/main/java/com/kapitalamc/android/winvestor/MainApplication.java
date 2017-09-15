@@ -1,4 +1,4 @@
-package com.winvestor_noexp;
+package com.kapitalamc.android.winvestor;
 
 import android.app.Application;
 

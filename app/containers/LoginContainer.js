@@ -128,7 +128,7 @@ class LoginContainer extends Component {
     render() {
         let showLoadingIndicator = this.props.auth.status === 'undefined' || this.props.auth.status === 'logging_in_with_token' || this.props.auth.status === 'logged_in';
         return (
-            <LinearGradient colors={['#2a9598', '#2ec67b']} style={styles.container}>
+            <LinearGradient colors={['#0000a0', '#000040']} style={styles.container}>
                 <StatusBar hidden={true}/>
                 <Text
                     style={{color: 'white', backgroundColor: 'transparent', fontWeight: 'bold', fontSize: 40}}
