@@ -3,6 +3,7 @@ import {AsyncStorage} from 'react-native';
 import {NavigationActions} from 'react-navigation';
 import * as types from '../../stores/auth/action-types';
 import * as news_types from '../../stores/news/action-types';
+import * as common_types from '../../stores/common/action-types';
 import * as api from '../../api';
 
 export const onLoginRequest = function* ({email, password}) {
@@ -51,4 +52,21 @@ export const onLoginRequestWithToken = function* ({token}) {
     } catch (error) {
         yield put({type: types.ON_LOG_IN_WITH_TOKEN_FAILURE, error});
     }
+};
+
+export const removeAccessToken = function* () {
+  try {
+      yield AsyncStorage.removeItem('winvestor_profile');
+      yield put({type: common_types.USER_LOG_OUT});
+
+      const resetAction = NavigationActions.reset({
+          index: 0,
+          actions: [
+              NavigationActions.navigate({ routeName: 'Login'})
+          ]
+      });
+      yield put(resetAction);
+  } catch (error) {
+
+  }
 };

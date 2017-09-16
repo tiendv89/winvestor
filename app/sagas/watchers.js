@@ -29,3 +29,7 @@ export const watchReceiveNewMessages = function* () {
 export const watchRefreshNews = function* () {
     yield takeLatest(news_types.REFRESH_NEWS, news_sagas.fetchPublicNews);
 };
+
+export const watchRemoveAccessToken = function* () {
+    yield takeLatest(auth_types.REMOVE_ACCESS_TOKEN, auth_sagas.removeAccessToken);
+};

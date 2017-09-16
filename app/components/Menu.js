@@ -12,6 +12,8 @@ import {Icon} from 'react-native-elements';
 
 export const MENU_PROFILE = 1;
 export const MENU_NEWS = 2;
+export const MENU_ABOUT = 3;
+export const MENU_LOGOUT = 3;
 
 class Menu extends Component {
     static propTypes = {
@@ -57,6 +59,40 @@ class Menu extends Component {
                         textAlign: 'center'
                     }}>
                         News
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={{flexDirection: 'row', marginVertical: 10}}
+                    onPress={() => {
+                        this.props.onItemSelected(MENU_ABOUT)
+                    }}
+                >
+                    <Icon name='settings' color='white'/>
+                    <Text style={{
+                        marginLeft: 10,
+                        color: 'white',
+                        fontSize: 20,
+                        textAlignVertical: 'center',
+                        textAlign: 'center'
+                    }}>
+                        About
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={{flexDirection: 'row', marginVertical: 10}}
+                    onPress={() => {
+                        this.props.onItemSelected(MENU_LOGOUT)
+                    }}
+                >
+                    <Icon name='settings' color='white'/>
+                    <Text style={{
+                        marginLeft: 10,
+                        color: 'white',
+                        fontSize: 20,
+                        textAlignVertical: 'center',
+                        textAlign: 'center'
+                    }}>
+                        Log out
                     </Text>
                 </TouchableOpacity>
             </View>

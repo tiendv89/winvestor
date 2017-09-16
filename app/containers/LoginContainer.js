@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     buttonLogin: {
         width: 0.9 * Dimensions.get('window').width,
         height: 0.09 * Dimensions.get('window').height,
-        backgroundColor: '#34495e',
+            backgroundColor: '#34495e',
         borderRadius: 5
     }
 });

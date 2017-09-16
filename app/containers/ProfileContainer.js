@@ -6,6 +6,8 @@ import {
     Dimensions,
     FlatList,
     Image,
+    Linking,
+    ScrollView,
     StyleSheet,
     StatusBar,
     Platform,
@@ -15,8 +17,11 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import {Divider, SideMenu, Icon} from 'react-native-elements';
-import Menu, {MENU_PROFILE, MENU_NEWS} from '../components/Menu';
 import {refreshNews} from '../stores/news/actions';
+import {removeAccessToken} from '../stores/auth/actions';
+import Menu, {MENU_PROFILE, MENU_NEWS, MENU_ABOUT, MENU_LOGOUT} from '../components/Menu';
+import LoadingButton from '../components/LoadingButton';
+import * as strings from '../resources/strings';
 
 const MAX_WIDTH = Dimensions.get('window').width * 0.9;
 
@@ -60,7 +65,11 @@ class ProfileContainer extends Component {
     }
 
     onMenuItemSelected(item) {
-        this.setState({isOpen: !this.state.isOpen, chosen: item});
+        if (item !== MENU_LOGOUT)
+            this.setState({isOpen: !this.state.isOpen, chosen: item});
+        else {
+            this.props.dispatch(removeAccessToken());
+        }
     }
 
     render() {
@@ -82,8 +91,10 @@ class ProfileContainer extends Component {
     renderContent() {
         if (this.state.chosen === MENU_PROFILE)
             return this.renderProfile();
-        else
+        else if (this.state.chosen === MENU_NEWS)
             return this.renderNews();
+        else if (this.state.chosen === MENU_ABOUT)
+            return this.renderAbout();
     }
 
     _renderItem = ({item}) => (
@@ -280,6 +291,69 @@ class ProfileContainer extends Component {
             </View>
         );
     }
+
+    renderAbout() {
+        return (
+            <View style={[styles.container, {paddingBottom: 10}]}>
+                <StatusBar hidden={true}/>
+                <View style={{flexDirection: 'row', justifyContent: 'flex-start', width: '90%'}}>
+                    <TouchableOpacity
+                        style={{alignItems: 'center', justifyContent: 'center'}}
+                        onPress={() => this.toogleSideMenu()}
+                    >
+                        <Icon name='menu' size={30} type='material-community'/>
+                    </TouchableOpacity>
+                    <Text
+                        style={{marginLeft: 10, fontWeight: 'bold', fontSize: 30, marginVertical: 5}}
+                    >
+                        Về chúng tôi
+                    </Text>
+                </View>
+                <Divider style={{height: 3, width: '90%', backgroundColor: '#3C8DBC', marginBottom: 20}}/>
+                <View
+                    style={{flex: 1, borderWidth: 2, borderRadius: 5, borderColor: '#34495e', marginHorizontal: 20, paddingHorizontal: 10, paddingVertical: 10}}
+                >
+                    <ScrollView>
+                        <Text style={{color: '#34495e', fontWeight: 'bold', fontSize: 24, alignSelf: 'center', marginVertical: 10}}>
+                            TỔNG QUAN
+                        </Text>
+                        <Text style={{color: '#34495e', fontSize: 18}}>
+                            {strings.overview_text}
+                        </Text>
+                        <Text style={{color: '#34495e', fontWeight: 'bold', fontSize: 24, alignSelf: 'center', marginVertical: 10}}>
+                            SẢN PHẨM
+                        </Text>
+                        <Text style={{color: '#34495e', fontSize: 18, marginBottom: 5}}>
+                            {strings.product_detail1}
+                        </Text>
+                        <Text style={{color: '#34495e', fontSize: 18}}>
+                            {strings.product_detail2}
+                        </Text>
+                        <Text style={{color: '#34495e', fontSize: 18, marginBottom: 5}}>
+                            {strings.product_detail3}
+                        </Text>
+                        <Text style={{color: '#34495e', fontSize: 18, marginBottom: 5}}>
+                            {strings.product_detail4}
+                        </Text>
+                        <Text style={{color: '#34495e', fontSize: 18, marginBottom: 5}}>
+                            {strings.product_detail5}
+                        </Text>
+                        <Text style={{color: '#34495e', fontSize: 18, marginBottom: 5}}>
+                            {strings.product_detail6}
+                        </Text>
+                    </ScrollView>
+                </View>
+                <LoadingButton
+                    processing={false}
+                    buttonText='Đến Website'
+                    buttonStyle={[styles.buttonLogin, {marginTop: 10}]}
+                    onPress={() => {
+                        Linking.openURL('https://winvestor.vn').catch(err => console.error('An error occurred', err));
+                    }}
+                />
+            </View>
+        )
+    }
 }
 
 ProfileContainer.propTypes = {
@@ -338,5 +412,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
+    },
+    buttonLogin: {
+        width: 0.7 * Dimensions.get('window').width,
+        height: 0.09 * Dimensions.get('window').height,
+        backgroundColor: '#0000a0',
+        borderRadius: 15
     }
 });

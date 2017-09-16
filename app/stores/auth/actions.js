@@ -10,4 +10,8 @@ export const onLoginRequestWithToken = (token) => {
 
 export const onLoadTokenFailed = () => {
     return {type: types.ON_LOG_IN_WITH_TOKEN_FAILURE};
+};
+
+export const removeAccessToken = () => {
+    return {type: types.REMOVE_ACCESS_TOKEN};
 }

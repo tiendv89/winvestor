@@ -1,4 +1,5 @@
 import * as types from './action-types';
+import * as common_types from '../common/action-types';
 
 const initialState = ({
     status: 'undefined',
@@ -19,6 +20,8 @@ export default function reduce(state = initialState, action = {}) {
             return {...state, status: 'no_auth'};
         case types.REFRESH_NEWS:
             return {...state, status: 'refreshing'};
+        case common_types.USER_LOG_OUT:
+            return {status: 'undefined', data: []};
         default:
             return state;
     }
