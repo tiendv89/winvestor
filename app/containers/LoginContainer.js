@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import RNPusherPushNotifications from 'react-native-pusher-push-notifications';
 import LoadingButton from '../components/LoadingButton';
-import {ActivityIndicator, AsyncStorage, Dimensions, Keyboard, Platform, StatusBar, StyleSheet, Text, TextInput, View} from 'react-native';
+import {ActivityIndicator, AsyncStorage, Dimensions, Image, Keyboard, Platform, StatusBar, StyleSheet, Text, TextInput, View} from 'react-native';
 import {NavigationActions} from 'react-navigation';
 import {connect} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
@@ -84,13 +84,14 @@ class LoginContainer extends Component {
     }
 
     subscribePNChannel(id) {
-        let channelId = id ? id : this.props.auth.profile._id;
         // Subscribe to push notifications
         if (Platform.OS === 'ios') {
             // iOS callbacks are beta, so dont use them
+            let channelId = this.props.auth.profile._id;
             RNPusherPushNotifications.subscribe(channelId);
         } else {
             // Android is better, so handle faults
+            let channelId = id;
             RNPusherPushNotifications.subscribe(
                 channelId,
                 (error) => {
@@ -122,15 +123,19 @@ class LoginContainer extends Component {
     render() {
         let showLoadingIndicator = this.props.auth.status === 'undefined' || this.props.auth.status === 'logging_in_with_token' || this.props.auth.status === 'logged_in';
         return (
-            <LinearGradient colors={['#0000a0', '#000040']} style={styles.container}>
+            <View style={styles.container}>
                 <StatusBar hidden={true}/>
+                <Image
+                    style={{width: 100, height: 100}}
+                    source={require('../resources/logo.png')}
+                />
                 <Text
-                    style={{color: 'white', backgroundColor: 'transparent', fontWeight: 'bold', fontSize: 40}}
+                    style={{color: '#0000a0', backgroundColor: 'transparent', fontWeight: 'bold', fontSize: 40}}
                 >
                     WINVESTOR
                 </Text>
                 <Text
-                    style={{color: 'white', backgroundColor: 'transparent', fontStyle: 'italic', marginTop: 5, textAlign: 'center'}}
+                    style={{color: '#0000a0', backgroundColor: 'transparent', fontStyle: 'italic', marginTop: 5, textAlign: 'center'}}
                 >
                     Đầu tư kỷ luật để thành công{'\n'}Disciplined investing for success
                 </Text>
@@ -169,7 +174,7 @@ class LoginContainer extends Component {
                     </View>
                 }
                 <View style={{height: this.props.common.keyboardHeight}}/>
-            </LinearGradient>
+            </View>
         );
     }
 }
@@ -193,7 +198,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF',
+        backgroundColor: '#FFFFFF',
     },
     centering: {
         alignItems: 'center',
