@@ -13,7 +13,7 @@ import {Icon} from 'react-native-elements';
 export const MENU_PROFILE = 1;
 export const MENU_NEWS = 2;
 export const MENU_ABOUT = 3;
-export const MENU_LOGOUT = 3;
+export const MENU_LOGOUT = 4;
 
 class Menu extends Component {
     static propTypes = {
