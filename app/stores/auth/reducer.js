@@ -3,18 +3,7 @@ import * as types from './action-types';
 const initialNavState = {
     status: 'undefined',
     profile: {
-        _id: "59aedee4702c0608e80047c5",
-        name: "Đinh Văn Tiến",
-        nickname: "tiendv",
-        birthday: "1989-10-21 00:29:08",
-        phone: "0932372636",
-        email: "tiendv.2703@gmail.com",
-        city: "Hà Nội",
-        address: "",
-        updated_at: "2017-09-06 22:14:12",
-        created_at: "2017-09-06 00:29:08",
-        point: 5,
-        avatar: null
+
     }
 };
 

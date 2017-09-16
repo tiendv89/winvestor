@@ -49,7 +49,7 @@ class LoginContainer extends Component {
                 RNPusherPushNotifications.on('registered', this.subscribePNChannel);
             } else {
                 // Android is immediate
-                this.subscribePNChannel();
+                this.subscribePNChannel(nextProps.auth.profile._id);
             }
 
             this.initPusher().then(_token => {
@@ -83,8 +83,8 @@ class LoginContainer extends Component {
         return _token;
     }
 
-    subscribePNChannel() {
-        let channelId = this.props.auth.profile._id;
+    subscribePNChannel(id) {
+        let channelId = id ? id : this.props.auth.profile._id;
         // Subscribe to push notifications
         if (Platform.OS === 'ios') {
             // iOS callbacks are beta, so dont use them
