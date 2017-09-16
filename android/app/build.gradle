@@ -97,7 +97,7 @@ android {
         applicationId "com.kapitalamc.android.winvestor"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 10001
+        versionCode 10002
         versionName "1.0.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
