@@ -11,7 +11,7 @@ import {receiveNewMessages} from '../stores/news/actions';
 import Pusher from 'pusher-js/react-native';
 import * as api from '../api';
 
-Pusher.logToConsole = true;
+Pusher.logToConsole = false;
 
 class LoginContainer extends Component {
     static navigationOptions = {
@@ -46,7 +46,6 @@ class LoginContainer extends Component {
 
             if (Platform.OS === 'ios') {
                 // iOS must wait for rego
-                console.log("Hey zoo I listen");
                 RNPusherPushNotifications.on('registered', this.subscribePNChannel);
             } else {
                 // Android is immediate
@@ -54,12 +53,10 @@ class LoginContainer extends Component {
             }
 
             this.initPusher().then(_token => {
-                console.log(_token);
                 let userId = nextProps.auth.profile._id;
                 let channelId = 'private-' + userId;
                 let token = nextProps.auth.profile.accessToken;
                 let authEndpoint = 'https://winvestor.vn/api/private-channel/' + userId + '/' + token;
-                console.log(authEndpoint);
                 // Pusher private channel
                 this.pusher = new Pusher('2912f2814f5e00f8b82d', {
                     cluster: 'ap1',
@@ -73,7 +70,6 @@ class LoginContainer extends Component {
 
                 let channel = this.pusher.subscribe(channelId);
                 channel.bind('privateStockEvent', function(data) {
-                    console.log(data);
                     this.props.dispatch(receiveNewMessages(data));
                 }.bind(this));
             });
@@ -89,7 +85,6 @@ class LoginContainer extends Component {
 
     subscribePNChannel() {
         let channelId = this.props.auth.profile._id;
-        console.log('Subscribe to channel: ' + channelId);
         // Subscribe to push notifications
         if (Platform.OS === 'ios') {
             // iOS callbacks are beta, so dont use them
@@ -110,7 +105,6 @@ class LoginContainer extends Component {
 
     async _loadToken() {
         const token = await AsyncStorage.getItem('winvestor_profile');
-        console.log(token);
 
         return token;
     }
