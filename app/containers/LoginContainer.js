@@ -55,6 +55,8 @@ class LoginContainer extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.auth.status !== this.props.auth.status) {
             if (nextProps.auth.status === 'logged_in') {
+                this.setState({loginInProgress: false});
+
                 // Pusher Pushnotifications
                 RNPusherPushNotifications.setAppKey('2912f2814f5e00f8b82d');
 
@@ -90,6 +92,7 @@ class LoginContainer extends Component {
 
                 this.props.dispatch(NavigationActions.navigate({routeName: 'Profile'}));
             } else if (nextProps.auth.status === 'unauthorized') {
+                this.setState({loginInProgress: false});
                 Alert.alert(
                     'Đăng nhập thất bại',
                     'Tài khoản và mật khẩu không trùng khớp.',
