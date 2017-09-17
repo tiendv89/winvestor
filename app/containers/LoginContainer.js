@@ -2,11 +2,24 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import RNPusherPushNotifications from 'react-native-pusher-push-notifications';
 import LoadingButton from '../components/LoadingButton';
-import {ActivityIndicator, AsyncStorage, Dimensions, Image, Keyboard, Platform, StatusBar, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+    Alert,
+    ActivityIndicator,
+    AsyncStorage,
+    Dimensions,
+    Image,
+    Keyboard,
+    Platform,
+    StatusBar,
+    StyleSheet,
+    Text,
+    TextInput,
+    View
+} from 'react-native';
 import {NavigationActions} from 'react-navigation';
 import {connect} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
-import {onLoginRequest, onLoginRequestWithToken, onLoadTokenFailed} from '../stores/auth/actions';
+import {onLoginRequest, onLoginRequestWithToken, onLoadTokenFailed, resetLoginState} from '../stores/auth/actions';
 import {receiveNewMessages} from '../stores/news/actions';
 import Pusher from 'pusher-js/react-native';
 import * as api from '../api';
@@ -40,42 +53,56 @@ class LoginContainer extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.auth.status !== this.props.auth.status && nextProps.auth.status === 'logged_in') {
-            // Pusher Pushnotifications
-            RNPusherPushNotifications.setAppKey('2912f2814f5e00f8b82d');
+        if (nextProps.auth.status !== this.props.auth.status) {
+            if (nextProps.auth.status === 'logged_in') {
+                // Pusher Pushnotifications
+                RNPusherPushNotifications.setAppKey('2912f2814f5e00f8b82d');
 
-            if (Platform.OS === 'ios') {
-                // iOS must wait for rego
-                RNPusherPushNotifications.on('registered', this.subscribePNChannel);
-            } else {
-                // Android is immediate
-                this.subscribePNChannel(nextProps.auth.profile._id);
-            }
+                if (Platform.OS === 'ios') {
+                    // iOS must wait for rego
+                    RNPusherPushNotifications.on('registered', this.subscribePNChannel);
+                } else {
+                    // Android is immediate
+                    this.subscribePNChannel(nextProps.auth.profile._id);
+                }
 
-            this.initPusher().then(_token => {
-                let userId = nextProps.auth.profile._id;
-                let channelId = 'private-' + userId;
-                let token = nextProps.auth.profile.accessToken;
-                let authEndpoint = 'https://winvestor.vn/api/private-channel/' + userId + '/' + token;
-                // Pusher private channel
-                this.pusher = new Pusher('2912f2814f5e00f8b82d', {
-                    cluster: 'ap1',
-                    authEndpoint: authEndpoint,
-                    auth: {
-                        params: {
-                            _token: _token.data.token,
+                this.initPusher().then(_token => {
+                    let userId = nextProps.auth.profile._id;
+                    let channelId = 'private-' + userId;
+                    let token = nextProps.auth.profile.accessToken;
+                    let authEndpoint = 'https://winvestor.vn/api/private-channel/' + userId + '/' + token;
+                    // Pusher private channel
+                    this.pusher = new Pusher('2912f2814f5e00f8b82d', {
+                        cluster: 'ap1',
+                        authEndpoint: authEndpoint,
+                        auth: {
+                            params: {
+                                _token: _token.data.token,
+                            }
                         }
-                    }
+                    });
+
+                    let channel = this.pusher.subscribe(channelId);
+                    channel.bind('privateStockEvent', function (data) {
+                        this.props.dispatch(receiveNewMessages(data));
+                    }.bind(this));
                 });
 
-                let channel = this.pusher.subscribe(channelId);
-                channel.bind('privateStockEvent', function(data) {
-                    this.props.dispatch(receiveNewMessages(data));
-                }.bind(this));
-            });
-
-            this.props.dispatch(NavigationActions.navigate({routeName: 'Profile'}));
+                this.props.dispatch(NavigationActions.navigate({routeName: 'Profile'}));
+            } else if (nextProps.auth.status === 'unauthorized') {
+                Alert.alert(
+                    'Đăng nhập thất bại',
+                    'Tài khoản và mật khẩu không trùng khớp.',
+                    [
+                        {text: 'OK', onPress: () => {this.onRetry()}}
+                    ]
+                )
+            }
         }
+    }
+
+    onRetry() {
+        this.setState({password: ''});
     }
 
     async initPusher() {
@@ -135,7 +162,13 @@ class LoginContainer extends Component {
                     WINVESTOR
                 </Text>
                 <Text
-                    style={{color: '#0000a0', backgroundColor: 'transparent', fontStyle: 'italic', marginTop: 5, textAlign: 'center'}}
+                    style={{
+                        color: '#0000a0',
+                        backgroundColor: 'transparent',
+                        fontStyle: 'italic',
+                        marginTop: 5,
+                        textAlign: 'center'
+                    }}
                 >
                     Đầu tư kỷ luật để thành công{'\n'}Disciplined investing for success
                 </Text>
@@ -219,7 +252,7 @@ const styles = StyleSheet.create({
     buttonLogin: {
         width: 0.9 * Dimensions.get('window').width,
         height: 0.09 * Dimensions.get('window').height,
-            backgroundColor: '#34495e',
+        backgroundColor: '#34495e',
         borderRadius: 5
     }
 });
