@@ -97,7 +97,11 @@ class LoginContainer extends Component {
                     'Đăng nhập thất bại',
                     'Tài khoản và mật khẩu không trùng khớp.',
                     [
-                        {text: 'OK', onPress: () => {this.onRetry()}}
+                        {
+                            text: 'OK', onPress: () => {
+                            this.onRetry()
+                        }
+                        }
                     ]
                 )
             }
@@ -201,12 +205,36 @@ class LoginContainer extends Component {
                         />
                         <LoadingButton
                             processing={this.state.loginInProgress}
-                            buttonText='Sign in'
-                            buttonStyle={[styles.buttonLogin, {marginTop: 10}]}
+                            buttonText='Đăng nhập'
+                            buttonStyle={[styles.buttonLogin, {marginVertical: 10}]}
                             onPress={() => {
                                 this.login()
                             }}
                         />
+                        {this.props.common.keyboardHeight === 0 ?
+                            <View>
+                                <Text
+                                    style={{
+                                        color: '#0000a0',
+                                        backgroundColor: 'transparent',
+                                        marginVertical: 5,
+                                        textAlign: 'center'
+                                    }}
+                                >
+                                    HOẶC
+                                </Text>
+                                <LoadingButton
+                                    processing={false}
+                                    buttonText='Đăng ký'
+                                    buttonStyle={[styles.buttonLogin, {marginTop: 10}]}
+                                    onPress={() => {
+                                        this.props.dispatch(NavigationActions.navigate({routeName: 'Register'}))
+                                    }}
+                                />
+                            </View>
+                            :
+                            null
+                        }
                     </View>
                 }
                 <View style={{height: this.props.common.keyboardHeight}}/>

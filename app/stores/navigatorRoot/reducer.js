@@ -8,8 +8,6 @@ export default function reduce(state = initialNavState, action = {}) {
     let nextState;
     let currentRoute = '';
     switch (action.type) {
-        case NavigationActions.BACK:
-            return state;
         case NavigationActions.NAVIGATE:
             currentRoute = state.routes[state.index].routeName;
             if (currentRoute !== action.routeName) {

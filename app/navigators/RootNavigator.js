@@ -7,10 +7,12 @@ import {connectionState} from '../stores/connection/actions';
 import {onKeyboardDidChangeHeight} from '../stores/common/actions';
 import ProfileContainer from '../containers/ProfileContainer';
 import LoginContainer from '../containers/LoginContainer';
+import RegisterContainer from '../containers/RegisterContainer';
 
 export const RootNavigator = StackNavigator({
     Login: {screen: LoginContainer},
-    Profile: {screen: ProfileContainer}
+    Profile: {screen: ProfileContainer},
+    Register: {screen: RegisterContainer}
 }, {
     headerMode: 'screen',
     initialRouteName: 'Login'
