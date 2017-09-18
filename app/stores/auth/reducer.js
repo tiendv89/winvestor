@@ -5,7 +5,8 @@ const initialNavState = {
     status: 'undefined',
     profile: {
 
-    }
+    },
+    error: ''
 };
 
 export default function reduce(state = initialNavState, action = {}) {
@@ -20,6 +21,12 @@ export default function reduce(state = initialNavState, action = {}) {
             return {...state, status: 'logged_in', profile: action.profile.data};
         case types.ON_LOG_IN_FAILURE:
             return {...state, status: 'unauthorized'};
+        case types.ON_REGISTER_REQUEST:
+            return {...state, status: 'registering'};
+        case types.ON_REGISTER_REQUEST_FAILED:
+            return {...state, status: 'register_failed', error: action.error};
+        case types.ON_REGISTER_SUCCEES:
+            return {...state, status: 'register_success'};
         case common_types.USER_LOG_OUT:
             return {status: 'undefined', profile: {}};
         default:

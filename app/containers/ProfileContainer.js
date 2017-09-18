@@ -42,6 +42,10 @@ class ProfileContainer extends Component {
 
     componentWillMount() {
         AppState.addEventListener('change', this._handleAppStateChange);
+
+        if (this.props.navigation.state.params && this.props.navigation.state.params.chosenMenu) {
+            this.setState({chosen: this.props.navigation.state.params.chosenMenu});
+        }
     }
 
     componentWillUnmount() {

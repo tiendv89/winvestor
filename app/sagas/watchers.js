@@ -33,3 +33,7 @@ export const watchRefreshNews = function* () {
 export const watchRemoveAccessToken = function* () {
     yield takeLatest(auth_types.REMOVE_ACCESS_TOKEN, auth_sagas.removeAccessToken);
 };
+
+export const watchRegisterRequest = function* () {
+    yield takeLatest(auth_types.ON_REGISTER_REQUEST, auth_sagas.onRegisterRequest);
+}

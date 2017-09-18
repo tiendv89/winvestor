@@ -11,6 +11,7 @@ const startForeman = function* startForeman() {
     yield fork(watchers.watchRefreshNews);
     yield fork(watchers.watchReceiveNewMessages);
     yield fork(watchers.watchRemoveAccessToken);
+    yield fork(watchers.watchRegisterRequest);
 };
 
 export default startForeman;
