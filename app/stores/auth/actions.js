@@ -4,13 +4,12 @@ export const onLoginRequest = (email, password) => {
     return {type: types.ON_LOG_IN_REQUEST, email, password};
 };
 
-export const onRegisterRequest = (email, password, name, birthday, phone, address) => {
+export const onRegisterRequest = (email, password, name, phone, address) => {
     return {
         type: types.ON_REGISTER_REQUEST,
         email,
         password,
         name,
-        birthday,
         phone,
         address
     }

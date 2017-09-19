@@ -26,7 +26,7 @@ export default function reduce(state = initialNavState, action = {}) {
         case types.ON_REGISTER_REQUEST_FAILED:
             return {...state, status: 'register_failed', error: action.error};
         case types.ON_REGISTER_SUCCEES:
-            return {...state, status: 'register_success'};
+            return {...state, status: 'register_success', profile: action.profile.data};
         case common_types.USER_LOG_OUT:
             return {status: 'undefined', profile: {}};
         default:

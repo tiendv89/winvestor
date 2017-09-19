@@ -21,6 +21,7 @@ import {refreshNews} from '../stores/news/actions';
 import {removeAccessToken} from '../stores/auth/actions';
 import Menu, {MENU_PROFILE, MENU_NEWS, MENU_ABOUT, MENU_LOGOUT} from '../components/Menu';
 import LoadingButton from '../components/LoadingButton';
+import RNPusherPushNotifications from 'react-native-pusher-push-notifications';
 import * as strings from '../resources/strings';
 
 const MAX_WIDTH = Dimensions.get('window').width * 0.9;
@@ -72,13 +73,22 @@ class ProfileContainer extends Component {
         if (item !== MENU_LOGOUT)
             this.setState({isOpen: !this.state.isOpen, chosen: item});
         else {
+            RNPusherPushNotifications.unsubscribe(
+                this.props.profile._id,
+                (error) => {
+                    console.error(error);
+                },
+                (success) => {
+                    console.log(success);
+                }
+            );
             this.props.dispatch(removeAccessToken());
         }
     }
 
     render() {
         let {dispatch, nav} = this.props;
-        const menu = <Menu onItemSelected={(item) => this.onMenuItemSelected(item)}/>;
+        const menu = <Menu onItemSelected={(item) => this.onMenuItemSelected(item)} image={this.props.profile.avatar}/>;
         return (
             <SideMenu
                 menu={menu}
@@ -203,7 +213,7 @@ class ProfileContainer extends Component {
                 </View>
                 <Divider style={{height: 3, width: '90%', backgroundColor: '#3C8DBC'}}/>
                 <Image style={styles.circle_image}
-                       source={{uri: this.props.profile.avatar ? this.props.profile.avatar : 'https://jnaengineering.co.za/images/no_product.png'}}/>
+                       source={{uri: this.props.profile.avatar && this.props.profile.avatar.length > 0 ? this.props.profile.avatar : 'https://jnaengineering.co.za/images/no_product.png'}}/>
                 <Text
                     style={{fontSize: 25, marginVertical: 5}}
                 >

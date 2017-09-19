@@ -30,7 +30,6 @@ const INPUT_EMAIL = 2;
 const INPUT_PHONE = 3;
 const INPUT_ADDRESS = 4;
 const INPUT_PASSWORD = 5;
-const INPUT_BIRTHDAY = 6;
 
 class RegisterContainer extends Component {
     static navigationOptions = {
@@ -45,7 +44,6 @@ class RegisterContainer extends Component {
             name: '',
             email: '',
             password: '',
-            birthday: '',
             phone: '',
             address: ''
         }
@@ -91,16 +89,13 @@ class RegisterContainer extends Component {
             case INPUT_PASSWORD:
                 this.setState({password: text});
                 break;
-            case INPUT_BIRTHDAY:
-                this.setState({birthday: text});
-                break;
         }
     }
 
     register() {
         Keyboard.dismiss();
         this.setState({registerInProgress: true});
-        this.props.dispatch(onRegisterRequest(this.state.email, this.state.password, this.state.name, this.state.birthday, this.state.phone, this.state.address));
+        this.props.dispatch(onRegisterRequest(this.state.email, this.state.password, this.state.name, this.state.phone, this.state.address));
     }
 
     render() {
@@ -141,7 +136,7 @@ class RegisterContainer extends Component {
                             secureTextEntry={true}
                             maxLength={32}
                             onChangeText={(text) => this.onChangeText(text, INPUT_PASSWORD)}
-                            placeholder='Password'
+                            placeholder='Password (*)'
                             placeholderTextColor='#bdbdbd'
                             value={this.state.password}
                         />
@@ -159,16 +154,6 @@ class RegisterContainer extends Component {
                             style={[styles.formTextInput, {marginTop: 10}]}
                             underlineColorAndroid='transparent'
                             maxLength={32}
-                            onChangeText={(text) => this.onChangeText(text, INPUT_BIRTHDAY)}
-                            placeholder='Ngày sinh - DD/MM/YY (*)'
-                            returnKeyType='next'
-                            placeholderTextColor='#bdbdbd'
-                            value={this.state.birthday}
-                        />
-                        <TextInput
-                            style={[styles.formTextInput, {marginTop: 10}]}
-                            underlineColorAndroid='transparent'
-                            maxLength={32}
                             onChangeText={(text) => this.onChangeText(text, INPUT_PHONE)}
                             placeholder='Số điện thoại (*)'
                             keyboardType='phone-pad'
@@ -181,14 +166,14 @@ class RegisterContainer extends Component {
                             underlineColorAndroid='transparent'
                             maxLength={32}
                             onChangeText={(text) => this.onChangeText(text, INPUT_ADDRESS)}
-                            placeholder='Địa chỉ (*)'
+                            placeholder='Thành phố đang ở (*)'
                             returnKeyType='next'
                             placeholderTextColor='#bdbdbd'
                             value={this.state.address}
                         />
                         <Text
                             style={{marginHorizontal: 20, fontSize: 12, fontStyle: 'italic', marginTop: 15, marginBottom: 5, textDecorationLine: 'underline'}}
-                            onPress={() => {Linking.openURL('https://winvestor.vn').catch(err => console.error('An error occurred', err));}}
+                            onPress={() => {Linking.openURL('https://winvestor.vn/policies').catch(err => console.error('An error occurred', err));}}
                         >
                             (*) Bằng việc tiếp tục đăng ký, bạn đồng ý với các chính sách của chúng tôi.
                         </Text>

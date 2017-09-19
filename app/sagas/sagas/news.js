@@ -7,7 +7,6 @@ import * as selectors from "../../stores/selectors";
 export const fetchPublicNews = function* () {
     try {
         let profile = yield select(selectors.getProfile);
-        console.log(profile);
 
         if (profile.accessToken && profile.accessToken.length > 0) {
             const public_news = yield call(api.get, 'https://winvestor.vn/api/user-notification?token=' + profile.accessToken);

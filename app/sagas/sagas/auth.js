@@ -10,13 +10,11 @@ import * as api from '../../api';
 export const onLoginRequest = function* ({email, password}) {
     try {
         const {data} = yield call(api.get, 'https://winvestor.vn/api/token');
-        console.log(data);
 
         if (!data.token) {
             yield put({type: types.ON_LOG_IN_FAILURE, error: 'Token request failed'});
         } else {
             const auth_info = yield call(api.post, 'https://winvestor.vn/api/login', {email: email, password: password, _token: data.token})
-            console.log(auth_info);
 
             if (auth_info.data.status === 'error') {
                 yield put({type: types.ON_LOG_IN_FAILURE});
@@ -34,13 +32,11 @@ export const onLoginRequest = function* ({email, password}) {
 export const onLoginRequestWithToken = function* ({token}) {
     try {
         const {data} = yield call(api.get, 'https://winvestor.vn/api/token');
-        console.log(data);
 
         if (!data.token) {
             yield put({type: types.ON_LOG_IN_FAILURE, error: 'Token request failed'});
         } else {
-            const auth_info = yield call(api.post, 'https://winvestor.vn/api/login-access-token', {token: token, _token: data.token})
-            console.log(auth_info);
+            const auth_info = yield call(api.post, 'https://winvestor.vn/api/login-access-token', {token: token, _token: data.token})       
 
             if (auth_info.data.status === 'error') {
                 yield put({type: types.ON_LOG_IN_WITH_TOKEN_FAILURE});
@@ -72,20 +68,18 @@ export const removeAccessToken = function* () {
   }
 };
 
-export const onRegisterRequest = function* ({email, password, name, birthday, phone, address}) {
+export const onRegisterRequest = function* ({email, password, name, phone, address}) {
   try {
       const {data} = yield call(api.get, 'https://winvestor.vn/api/token');
-      console.log(data);
 
       if (!data.token) {
           yield put({type: types.ON_REGISTER_REQUEST_FAILED, error: 'Token request failed'});
       } else {
-          const auth_info = yield call(api.post, 'https://winvestor.vn/api/register', {email: email, password: password, name: name, birthday: birthday, phone: phone, address: address, _token: data.token});
-          console.log(auth_info);
+          const auth_info = yield call(api.post, 'https://winvestor.vn/api/register', {email: email, password: password, name: name, phone: phone, address: address, _token: data.token});
           if (auth_info.data.status === 'error') {
               yield put({type: types.ON_REGISTER_REQUEST_FAILED, error: auth_info.data.data.length > 0 ? auth_info.data.data[0] : 'Vui lòng thử lại.'});
           } else {
-              yield put({type: types.ON_REGISTER_SUCCEES, profile: auth_info.data});
+              yield put({type: types.ON_REGISTER_SUCCEES, profile: auth_info});
               yield AsyncStorage.setItem('winvestor_profile', auth_info.data.accessToken);
               const resetAction = NavigationActions.reset({
                   index: 0,

@@ -1,12 +1,12 @@
 import React, {Component, PropTypes} from 'react';
 import {
     Dimensions,
+    Image,
     StyleSheet,
     ScrollView,
-    View,
-    Image,
     Text,
-    TouchableOpacity
+    TouchableOpacity,
+    View
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 
@@ -27,8 +27,10 @@ class Menu extends Component {
     render() {
         return (
             <View style={[styles.container, {backgroundColor: '#004A7C'}]}>
+                <Image style={styles.circle_image}
+                       source={{uri: this.props.image !== undefined && this.props.image.length > 0 ? this.props.image : 'https://jnaengineering.co.za/images/no_product.png'}}/>
                 <TouchableOpacity
-                    style={{flexDirection: 'row', marginVertical: 10}}
+                    style={{flexDirection: 'row', marginVertical: 10, paddingLeft: 20, alignSelf: 'flex-start'}}
                     onPress={() => {
                         this.props.onItemSelected(MENU_PROFILE)
                     }}
@@ -41,16 +43,16 @@ class Menu extends Component {
                         textAlignVertical: 'center',
                         textAlign: 'center'
                     }}>
-                        Profile
+                        Thông tin cá nhân
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={{flexDirection: 'row', marginVertical: 10}}
+                    style={{flexDirection: 'row', marginVertical: 10, paddingLeft: 20, alignSelf: 'flex-start'}}
                     onPress={() => {
                         this.props.onItemSelected(MENU_NEWS)
                     }}
                 >
-                    <Icon name='settings' color='white'/>
+                    <Icon name='message' color='white'/>
                     <Text style={{
                         marginLeft: 10,
                         color: 'white',
@@ -58,16 +60,16 @@ class Menu extends Component {
                         textAlignVertical: 'center',
                         textAlign: 'center'
                     }}>
-                        News
+                        Cảnh báo thị trường
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={{flexDirection: 'row', marginVertical: 10}}
+                    style={{flexDirection: 'row', marginVertical: 10, paddingLeft: 20, alignSelf: 'flex-start'}}
                     onPress={() => {
                         this.props.onItemSelected(MENU_ABOUT)
                     }}
                 >
-                    <Icon name='settings' color='white'/>
+                    <Icon name='info' color='white'/>
                     <Text style={{
                         marginLeft: 10,
                         color: 'white',
@@ -75,16 +77,16 @@ class Menu extends Component {
                         textAlignVertical: 'center',
                         textAlign: 'center'
                     }}>
-                        About
+                        Giới thiệu
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={{flexDirection: 'row', marginVertical: 10}}
+                    style={{flexDirection: 'row', marginVertical: 10, paddingLeft: 20, alignSelf: 'flex-start'}}
                     onPress={() => {
                         this.props.onItemSelected(MENU_LOGOUT)
                     }}
                 >
-                    <Icon name='settings' color='white'/>
+                    <Icon name='sign-out' color='white' type='font-awesome'/>
                     <Text style={{
                         marginLeft: 10,
                         color: 'white',
@@ -92,18 +94,13 @@ class Menu extends Component {
                         textAlignVertical: 'center',
                         textAlign: 'center'
                     }}>
-                        Log out
+                        Thoát tài khoản
                     </Text>
                 </TouchableOpacity>
             </View>
         );
     }
-};
-
-Menu.propsType = {
-    wallets: PropTypes.array
 }
-
 
 const styles = StyleSheet.create({
     container: {
@@ -128,6 +125,14 @@ const styles = StyleSheet.create({
         fontWeight: '300',
         paddingTop: 5,
     },
+    circle_image: {
+        marginVertical: 50,
+        height: 100,
+        borderRadius: 50,
+        borderWidth: 3,
+        borderColor: '#D2D6DE',
+        width: 100
+    }
 });
 
 export default Menu;
