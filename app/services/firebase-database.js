@@ -20,7 +20,9 @@ class FirebaseAnalytics {
 
     buildAutoParam() {
         let ret = {};
-        ret[Param.USER_ID] = this.uid;
+        if (this.uid != '-1') {
+            ret[Param.USER_ID] = this.uid;
+        }
         ret[Param.APP_VERSION] = config.version;
         ret[Param.TIME_STAMP] = Math.round(new Date().getTime() / 1000);
         ret[Param.TIME] = dateFormat(new Date(), "isoDateTime");
@@ -47,7 +49,7 @@ class FirebaseAnalytics {
 
     trackRegisterPNSent(channelId) {
         let object = this.buildAutoParam();
-        object[Param.CHANNEL_ID] = error;
+        object[Param.CHANNEL_ID] = channelId;
 
         var ref = firebase.database().ref('events/' + Event.REQUEST_REGISTER_PUSH_NOTIFICATION).push();
         ref.set(object);
