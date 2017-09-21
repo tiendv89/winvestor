@@ -23,6 +23,7 @@ class FirebaseAnalytics {
         ret[Param.USER_ID] = this.uid;
         ret[Param.APP_VERSION] = config.version;
         ret[Param.TIME_STAMP] = Math.round(new Date().getTime() / 1000);
+        ret[Param.TIME] = dateFormat(new Date(), "isoDateTime");
 
         return ret;
     }
@@ -52,15 +53,79 @@ class FirebaseAnalytics {
         ref.set(object);
     }
 
-    // trackGoToPage(to, from) {
-    //     let object = this.buildAutoParam();
-    //     object[Param.FROM_PAGE] = from;
-    //     object[Param.TO_PAGE] = to;
-    //
-    //     firebase.analytics().logEvent(Event.GO_TO_PAGE, object);
-    //     var ref = firebase.database().ref('events-v2/' + Event.GO_TO_PAGE).push();
-    //     ref.set(object);
-    // }
+    trackLoginRequest(purpose, data) {
+        let object = this.buildAutoParam();
+        object[Param.PURPOSE] = purpose;
+        if (purpose === 'token') {
+            object[Param.TOKEN] = data.token;
+        } else {
+            object[Param.USER_EMAIL] = data.email;
+        }
+
+        var ref = firebase.database().ref('events/' + Event.LOGIN_REQUEST_SENT).push();
+        ref.set(object);
+    }
+
+    trackOnTokenRequestFailed(purpose) {
+        let object = this.buildAutoParam();
+        object[Param.PURPOSE] = purpose;
+
+        var ref = firebase.database().ref('events/' + Event.TOKEN_REQUEST_FAILED).push();
+        ref.set(object);
+    }
+
+    trackLoginFailed(error) {
+        let object = this.buildAutoParam();
+        object[Param.ERROR] = error;
+
+        var ref = firebase.database().ref('events/' + Event.LOGIN_REQUEST_FAILED).push();
+        ref.set(object);
+    }
+
+    trackLoginSuccess(profile) {
+        let object = this.buildAutoParam();
+        object[Param.USER_ID] = profile._id;
+        object[Param.USER_EMAIL] = profile.email;
+
+        var ref = firebase.database().ref('events/' + Event.LOGIN_REQUEST_SUCCESS).push();
+        ref.set(object);
+    }
+
+    trackRemoveAccessTokenFailed(error) {
+        let object = this.buildAutoParam();
+        object[Param.ERROR] = error;
+
+        var ref = firebase.database().ref('events/' + Event.REMOVE_ACCESS_TOKEN_ERROR).push();
+        ref.set(object);
+    }
+
+    trackRegisterRequest(email, name, phone, address) {
+        let object = this.buildAutoParam();
+        object[Param.USER_EMAIL] = email;
+        object[Param.USER_FULL_NAME] = name;
+        object[Param.USER_PHONE] = phone;
+        object[Param.USER_CITY] = address;
+
+        var ref = firebase.database().ref('events/' + Event.REGISTER_REQUEST_SENT).push();
+        ref.set(object);
+    }
+
+    trackRegisterFailed(error) {
+        let object = this.buildAutoParam();
+        object[Param.ERROR] = error;
+
+        var ref = firebase.database().ref('events/' + Event.REGISTER_REQUEST_FAILED).push();
+        ref.set(object);
+    }
+
+    trackRegisterSuccess(profile) {
+        let object = this.buildAutoParam();
+        object[Param.USER_ID] = profile._id;
+        object[Param.USER_EMAIL] = profile.email;
+
+        var ref = firebase.database().ref('events/' + Event.REGISTER_REQUEST_SUCCESS).push();
+        ref.set(object);
+    }
 }
 
 export default new FirebaseAnalytics();

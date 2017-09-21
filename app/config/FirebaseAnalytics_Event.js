@@ -4,3 +4,12 @@
 export const REQUEST_REGISTER_PUSH_NOTIFICATION = 'pn_register_sent';
 export const REGISTER_PUSH_NOTIFICATION_SUCCESS = 'pn_register_success';
 export const REGISTER_PUSH_NOTIFICATION_FAILURE = 'pn_register_failure';
+
+export const TOKEN_REQUEST_FAILED = 'token_failed';
+export const LOGIN_REQUEST_FAILED = 'login_failed';
+export const LOGIN_REQUEST_SUCCESS = 'login_success';
+export const LOGIN_REQUEST_SENT = 'login_sent';
+export const REGISTER_REQUEST_SENT = 'register_sent';
+export const REGISTER_REQUEST_FAILED = 'register_failed';
+export const REGISTER_REQUEST_SUCCESS = 'register_success';
+export const REMOVE_ACCESS_TOKEN_ERROR = 'remove_access_token_error';
