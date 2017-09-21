@@ -102,6 +102,7 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+            multiDexEnabled true
     }
     splits {
         abi {
@@ -153,14 +154,20 @@ android {
 }
 
 dependencies {
+    // RNFirebase required dependencies
+    compile(project(':react-native-firebase')) {
+        transitive = false
+    }
     compile project(':react-native-linear-gradient')
     compile project(':react-native-vector-icons')
     compile project(':react-native-pusher-push-notifications')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:24.0.0"
     compile "com.facebook.react:react-native:+"  // From node_modules
-    compile 'com.google.firebase:firebase-messaging:9.8.0'
-    compile 'com.google.firebase:firebase-core:9.8.0'
+    compile "com.google.android.gms:play-services-base:11.2.0"
+    compile 'com.google.firebase:firebase-messaging:11.2.0'
+    compile 'com.google.firebase:firebase-core:11.2.0'
+    compile "com.google.firebase:firebase-database:11.2.0"
     compile 'com.pusher:pusher-websocket-android:0.5.0'
 }
 

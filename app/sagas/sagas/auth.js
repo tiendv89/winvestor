@@ -36,7 +36,7 @@ export const onLoginRequestWithToken = function* ({token}) {
         if (!data.token) {
             yield put({type: types.ON_LOG_IN_FAILURE, error: 'Token request failed'});
         } else {
-            const auth_info = yield call(api.post, 'https://winvestor.vn/api/login-access-token', {token: token, _token: data.token})       
+            const auth_info = yield call(api.post, 'https://winvestor.vn/api/login-access-token', {token: token, _token: data.token})
 
             if (auth_info.data.status === 'error') {
                 yield put({type: types.ON_LOG_IN_WITH_TOKEN_FAILURE});

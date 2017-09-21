@@ -23,6 +23,7 @@ import {onLoginRequest, onLoginRequestWithToken, onLoadTokenFailed, resetLoginSt
 import {receiveNewMessages} from '../stores/news/actions';
 import Pusher from 'pusher-js/react-native';
 import * as api from '../api';
+import FirebaseDatabase from '../services/firebase-database';
 
 Pusher.logToConsole = false;
 
@@ -56,6 +57,8 @@ class LoginContainer extends Component {
         if (nextProps.auth.status !== this.props.auth.status) {
             if (nextProps.auth.status === 'logged_in') {
                 this.setState({loginInProgress: false});
+
+                FirebaseDatabase.setUserId(nextProps.auth.profile);
 
                 // Pusher Pushnotifications
                 RNPusherPushNotifications.setAppKey('2912f2814f5e00f8b82d');
@@ -126,13 +129,16 @@ class LoginContainer extends Component {
         } else {
             // Android is better, so handle faults
             let channelId = id;
+            FirebaseDatabase.trackRegisterPNSent(channelId);
             RNPusherPushNotifications.subscribe(
                 channelId,
                 (error) => {
                     console.error(error);
+                    FirebaseDatabase.trackRegisterPNError(error);
                 },
                 (success) => {
                     console.log(success);
+                    FirebaseDatabase.trackRegisterPNSuccess(success);
                 }
             );
         }
