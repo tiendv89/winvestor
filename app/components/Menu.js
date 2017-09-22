@@ -28,7 +28,7 @@ class Menu extends Component {
         return (
             <View style={[styles.container, {backgroundColor: '#004A7C'}]}>
                 <Image style={styles.circle_image}
-                       source={{uri: this.props.image !== undefined && this.props.image.length > 0 ? this.props.image : 'https://jnaengineering.co.za/images/no_product.png'}}/>
+                       source={{uri: this.props.image && this.props.image.length > 0 ? this.props.image : 'https://jnaengineering.co.za/images/no_product.png'}}/>
                 <TouchableOpacity
                     style={{flexDirection: 'row', marginVertical: 10, paddingLeft: 20, alignSelf: 'flex-start'}}
                     onPress={() => {
