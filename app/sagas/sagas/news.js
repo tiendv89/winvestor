@@ -10,7 +10,6 @@ export const fetchPublicNews = function* () {
 
         if (profile.accessToken && profile.accessToken.length > 0) {
             const public_news = yield call(api.get, 'https://winvestor.vn/api/user-notification?token=' + profile.accessToken);
-            console.log(public_news);
             if (public_news.status && public_news.status === 'errpor') {
                 const local_news = yield AsyncStorage.getItem('local_news');
 
