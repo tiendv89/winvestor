@@ -43,6 +43,7 @@
 		670A58873B5840A5A98FC66D /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 96E86423DF7945C699AEC11E /* Octicons.ttf */; };
 		6A03F3C59C26432598818100 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B37B38CE29C6456F8A500D3D /* SimpleLineIcons.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		841DDAA31F74B7630008AC25 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 841DDAA21F74B7620008AC25 /* GoogleService-Info.plist */; };
 		8EE90282D5414F13A8D13F82 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 684F891E51A14A92923E9F12 /* EvilIcons.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		BEFAA0E7B9EC4A98A0EA730D /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F93F2CEADD14633ADE1F0F3 /* MaterialCommunityIcons.ttf */; };
@@ -350,6 +351,7 @@
 		6AE3050C30774BA1B4C3E0B1 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		841DDAA21F74B7620008AC25 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		846EB43F1F65580200435DB7 /* winvestor_noexp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = winvestor_noexp.entitlements; path = winvestor_noexp/winvestor_noexp.entitlements; sourceTree = "<group>"; };
 		8B682A0E6A624B36A8268009 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		8F93F2CEADD14633ADE1F0F3 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
@@ -503,6 +505,7 @@
 		13B07FAE1A68108700A75B9A /* winvestor_noexp */ = {
 			isa = PBXGroup;
 			children = (
+				841DDAA21F74B7620008AC25 /* GoogleService-Info.plist */,
 				846EB43F1F65580200435DB7 /* winvestor_noexp.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -620,6 +623,7 @@
 				6611A193872844E8AF8A52C9 /* Resources */,
 				C46A36F06D498C28AB1EC2B9 /* Pods */,
 				7F6AF425FF977C88C78CD4E8 /* Frameworks */,
+				841DDA7E1F74AFE50008AC25 /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -635,6 +639,16 @@
 				2D02E4901E0B4A5D006451C7 /* winvestor_noexp-tvOSTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		841DDA7E1F74AFE50008AC25 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				D0F1601E97D14C01AF072CFE /* libRNPusherPushNotifications.a */,
+				29225C9796144081AEB89DAD /* libRNVectorIcons.a */,
+				9E1BFBC76594496084497E26 /* libBVLinearGradient.a */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		846EB4171F65554500435DB7 /* Products */ = {
@@ -1136,6 +1150,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				841DDAA31F74B7630008AC25 /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				F01BA02219994677827B45F5 /* Entypo.ttf in Resources */,

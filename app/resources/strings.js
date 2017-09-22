@@ -1,5 +1,5 @@
 export const overview_text = '\tWinvestor là ứng dụng khuyến nghị, tư vấn đầu tư của công ty cổ phần tư vấn Kapital AMC.\n\tXin mời anh chị' +
-    'ghé thăm trang chủ tại https://winvestor.vn để kích hoạt sử dụng app và nhận hướng dẫn xem khuyến nghị đầu tư cổ phiếu hàng ngày của chúng tôi.';
+    ' ghé thăm trang chủ tại https://winvestor.vn để kích hoạt sử dụng app và nhận hướng dẫn xem khuyến nghị đầu tư cổ phiếu hàng ngày của chúng tôi.';
 export const product_detail1 = 'Winvestor là nền tảng khuyến nghị đầu tư cổ phiếu từ nghiên cứu khoa học.';
 export const product_detail2 = 'Winvestor là một nền tảng ứng dụng thuộc sở hữu của Kapital AMC, đây là phiên bản nâng cấp, cải tiến hệ thống giải pháp đầu tư VnStockTrading, giúp nhà đầu tư ' +
     'có kết quả đầu tư tốt hơn nhờ dựa trên những thông tin mang tính chất khoa học' +

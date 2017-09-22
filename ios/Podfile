@@ -6,8 +6,34 @@ target 'winvestor_noexp' do
   # use_frameworks!
 
   # Pods for winvestor_noexp
+  pod "Yoga", :path => "../node_modules/react-native/ReactCommon/yoga"
+  pod 'React', :path => '../node_modules/react-native', :subspecs => [
+    'BatchedBridge', # Required For React Native 0.45.0+
+    'Core',
+    # Add any other subspecs you want to use in your project
+  ]
 
   pod 'libPusher', git: 'https://github.com/pusher/libPusher.git', branch: 'push-notifications'
 
+  # Required by RNFirebase
+  pod 'Firebase/Core'
+  pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
+
+  # [OPTIONAL PODS] - comment out pods for firebase products you won't be using.
+  # pod 'Firebase/AdMob'
+  # pod 'Firebase/Auth'
+  # pod 'Firebase/Crash'
+  pod 'Firebase/Database'
+  # pod 'Firebase/DynamicLinks'
+  # pod 'Firebase/Messaging'
+  # pod 'Firebase/RemoteConfig'
+  # pod 'Firebase/Storage'
 end
 
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name == "React"
+      target.remove_from_project
+    end
+  end
+end

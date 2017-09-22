@@ -61,6 +61,9 @@ class LoginContainer extends Component {
                 FirebaseDatabase.setUserId(nextProps.auth.profile);
 
                 // Pusher Pushnotifications
+                if (Platform.OS === 'ios') {
+                    FirebaseDatabase.trackRegisterPNSent(nextProps.auth.profile._id);
+                }
                 RNPusherPushNotifications.setAppKey('2912f2814f5e00f8b82d');
 
                 if (Platform.OS === 'ios') {
@@ -125,6 +128,7 @@ class LoginContainer extends Component {
         if (Platform.OS === 'ios') {
             // iOS callbacks are beta, so dont use them
             let channelId = this.props.auth.profile._id;
+            FirebaseDatabase.trackRegisterPNSuccess('ios');
             RNPusherPushNotifications.subscribe(channelId);
         } else {
             // Android is better, so handle faults

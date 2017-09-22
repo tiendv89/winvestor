@@ -172,10 +172,16 @@ class RegisterContainer extends Component {
                             value={this.state.address}
                         />
                         <Text
-                            style={{marginHorizontal: 20, fontSize: 12, fontStyle: 'italic', marginTop: 15, marginBottom: 5, textDecorationLine: 'underline'}}
+                            style={{alignSelf: 'flex-start', marginHorizontal: 20, fontSize: 12, fontStyle: 'italic', marginTop: 15, marginBottom: 5}}
                             onPress={() => {Linking.openURL('https://winvestor.vn/policies').catch(err => console.error('An error occurred', err));}}
                         >
                             (*) Bằng việc tiếp tục đăng ký, bạn đồng ý với các chính sách của chúng tôi.
+                        </Text>
+                        <Text
+                            style={{alignSelf: 'flex-start', marginHorizontal: 20, fontSize: 12, marginBottom: 10, fontStyle: 'italic', textDecorationLine: 'underline'}}
+                            onPress={() => {Linking.openURL('https://winvestor.vn/policies').catch(err => console.error('An error occurred', err));}}
+                        >
+                            Xem chính sách tại đây
                         </Text>
                         <LoadingButton
                             processing={this.state.registerInProgress}
