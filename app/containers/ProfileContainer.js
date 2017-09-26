@@ -116,14 +116,14 @@ class ProfileContainer extends Component {
             <Text
                 style={{fontSize: 20, fontWeight: 'bold', marginTop: 5, marginLeft: 5}}
             >
-                {item.message}
+                {item.message ? item.message : ''}
             </Text>
             <View style={{flexDirection: 'row', justifyContent: 'flex-start', paddingLeft: 5}}>
                 <Icon name="access-time" size={18}/>
                 <Text
                     style={{fontSize: 18, marginLeft: 5, marginTop: 5}}
                 >
-                    {item.creationDate}
+                    {item.creationDate ? item.creationDate : ''}
                 </Text>
             </View>
         </View>

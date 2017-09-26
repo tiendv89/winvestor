@@ -1,3 +1,4 @@
+import {Platform} from 'react-native';
 import * as Event from '../config/FirebaseAnalytics_Event';
 import * as Param from '../config/FirebaseAnalytics_Param';
 import RNFirebase from 'react-native-firebase';
@@ -126,6 +127,46 @@ class FirebaseAnalytics {
         object[Param.USER_EMAIL] = profile.email;
 
         var ref = firebase.database().ref('events/' + Event.REGISTER_REQUEST_SUCCESS).push();
+        ref.set(object);
+    }
+
+    trackFetchNewsSuccess(news, isLocal) {
+        let object = this.buildAutoParam();
+        object[Param.SOURCE] = isLocal ? 'local' : 'online';
+        if (Platform.OS === 'android')
+            object[Param.NEWS_LIST] = news.reduce(function (obj, value, index) {
+                obj[index] = value;
+                return obj
+            }, {});
+        else
+            object[Param.NEWS_LIST] = news;
+
+
+        var ref = firebase.database().ref('events/' + Event.FETCH_NEWS_SUCCESS).push();
+        ref.set(object);
+    }
+
+    trackFetchNewsFailed(error) {
+        let object = this.buildAutoParam();
+        object[Param.ERROR] = error;
+
+        var ref = firebase.database().ref('events/' + Event.FETCH_NEWS_FAILED).push();
+        ref.set(object);
+    }
+
+    trackInitPrivateChannelFailed(error) {
+        let object = this.buildAutoParam();
+        object[Param.ERROR] = error;
+
+        var ref = firebase.database().ref('events/' + Event.INIT_PRIVATE_CHANNEL_FAILED).push();
+        ref.set(object);
+    }
+
+    trackInitPrivateChannelSuccess(id) {
+        let object = this.buildAutoParam();
+        object[Param.CHANNEL_ID] = id;
+
+        var ref = firebase.database().ref('events/' + Event.INIT_PRIVATE_CHANNEL_SUCCESS).push();
         ref.set(object);
     }
 }

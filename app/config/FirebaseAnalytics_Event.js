@@ -13,3 +13,7 @@ export const REGISTER_REQUEST_SENT = 'register_sent';
 export const REGISTER_REQUEST_FAILED = 'register_failed';
 export const REGISTER_REQUEST_SUCCESS = 'register_success';
 export const REMOVE_ACCESS_TOKEN_ERROR = 'remove_access_token_error';
+export const FETCH_NEWS_SUCCESS = 'fetch_news_success';
+export const FETCH_NEWS_FAILED = 'fetch_news_failed';
+export const INIT_PRIVATE_CHANNEL_FAILED = 'init_private_channel_failed';
+export const INIT_PRIVATE_CHANNEL_SUCCESS = 'init_private_channel_success';
