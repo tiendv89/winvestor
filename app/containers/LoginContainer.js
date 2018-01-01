@@ -37,8 +37,9 @@ class LoginContainer extends Component {
         this.state = {
             email: '',
             password: '',
-            loginInProgress: false
-        }
+            loginInProgress: false,
+            pn_id: ''
+        };
 
         this.subscribePNChannel = this.subscribePNChannel.bind(this);
     }
@@ -68,6 +69,7 @@ class LoginContainer extends Component {
 
                 if (Platform.OS === 'ios') {
                     // iOS must wait for rego
+                    this.setState({pn_id: nextProps.auth.profile._id});
                     RNPusherPushNotifications.on('registered', this.subscribePNChannel);
                 } else {
                     // Android is immediate
@@ -75,25 +77,30 @@ class LoginContainer extends Component {
                 }
 
                 this.initPusher().then(_token => {
-                    let userId = nextProps.auth.profile._id;
-                    let channelId = 'private-' + userId;
-                    let token = nextProps.auth.profile.accessToken;
-                    let authEndpoint = 'https://winvestor.vn/api/private-channel/' + userId + '/' + token;
-                    // Pusher private channel
-                    this.pusher = new Pusher('2912f2814f5e00f8b82d', {
-                        cluster: 'ap1',
-                        authEndpoint: authEndpoint,
-                        auth: {
-                            params: {
-                                _token: _token.data.token,
+                    try {
+                        let userId = nextProps.auth.profile._id;
+                        let channelId = 'private-' + userId;
+                        let token = nextProps.auth.profile.accessToken;
+                        let authEndpoint = 'https://winvestor.vn/api/private-channel/' + userId + '/' + token;
+                        // Pusher private channel
+                        this.pusher = new Pusher('2912f2814f5e00f8b82d', {
+                            cluster: 'ap1',
+                            authEndpoint: authEndpoint,
+                            auth: {
+                                params: {
+                                    _token: _token.data.token,
+                                }
                             }
-                        }
-                    });
+                        });
 
-                    let channel = this.pusher.subscribe(channelId);
-                    channel.bind('privateStockEvent', function (data) {
-                        this.props.dispatch(receiveNewMessages(data));
-                    }.bind(this));
+                        let channel = this.pusher.subscribe(channelId);
+                        channel.bind('privateStockEvent', function (data) {
+                            this.props.dispatch(receiveNewMessages(data));
+                        }.bind(this));
+                        FirebaseDatabase.trackInitPrivateChannelSuccess(channelId);
+                    } catch (error) {
+                        FirebaseDatabase.trackInitPrivateChannelFailed(error);
+                    }
                 });
 
                 this.props.dispatch(NavigationActions.navigate({routeName: 'Profile'}));
@@ -129,7 +136,7 @@ class LoginContainer extends Component {
         // Subscribe to push notifications
         if (Platform.OS === 'ios') {
             // iOS callbacks are beta, so dont use them
-            let channelId = this.props.auth.profile._id;
+            let channelId = this.props.auth.profile._id ? this.props.auth.profile._id : this.state.pn_id;
             FirebaseDatabase.trackRegisterPNSuccess('ios');
             RNPusherPushNotifications.subscribe(channelId);
         } else {

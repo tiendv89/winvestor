@@ -15,3 +15,5 @@ export const USER_PHONE = 'phone';
 export const USER_CITY = 'city';
 export const PURPOSE = 'purpose';
 export const TOKEN = 'token';
+export const SOURCE = 'source';
+export const NEWS_LIST = 'news';
