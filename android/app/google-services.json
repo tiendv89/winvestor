@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "743298527769",
+    "firebase_url": "https://winvestor-kapitalamc.firebaseio.com",
+    "project_id": "winvestor-kapitalamc",
+    "storage_bucket": "winvestor-kapitalamc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743298527769:android:76c4b8aa0db15093",
+        "android_client_info": {
+          "package_name": "com.kapitalamc.android.winvestor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "743298527769-r1u1fqmodfpl0hjfcr7ofs2paevcpank.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kapitalamc.android.winvestor",
+            "certificate_hash": "7b218cdd80c729dcbe77de6e6bf16c0b918113ad"
+          }
+        },
+        {
+          "client_id": "743298527769-to3csq90bm66bds9jglcq5tos2m5mp6m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJS_CZGK5mTTdlfofzELQP8X9qK3jsvDU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "743298527769-to3csq90bm66bds9jglcq5tos2m5mp6m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,16 +2,17 @@ import config from './config';
 
 const FETCH_TIMEOUT = 60000;
 const UPLOAD_TIMEOUT = 60000;
-const PRINT_API_LOG = false;
+const PRINT_API_LOG = true;
 
 export const get = async function(url) {
+    // this.logRequest('GET', url, {});
     return _fetch(url, {
         method: "GET"
     })
 };
 
 export const post = async function(url, params) {
-    this.logRequest('POST', url, params);
+    // this.logRequest('POST', url, params);
     return _fetch(url, {
         method: 'POST',
         headers: {

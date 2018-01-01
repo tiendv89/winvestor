@@ -19,7 +19,7 @@ import {
 import {NavigationActions} from 'react-navigation';
 import {connect} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
-import {onLoginRequest, onLoginRequestWithToken, onLoadTokenFailed, resetLoginState} from '../stores/auth/actions';
+import {onLoginRequest, onLoginRequestWithToken, onLoadTokenFailed, resetLoginState, removeAccessToken} from '../stores/auth/actions';
 import {receiveNewMessages} from '../stores/news/actions';
 import Pusher from 'pusher-js/react-native';
 import * as api from '../api';
@@ -110,6 +110,8 @@ class LoginContainer extends Component {
                         }
                     ]
                 )
+            } else if (nextProps.auth.status === 'unauthorized') {
+                this.props.dispatch(removeAccessToken())
             }
         }
     }

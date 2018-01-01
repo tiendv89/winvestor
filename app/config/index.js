@@ -1,4 +1,4 @@
 export default {
     version: '1.0.0e',
-    env: 'production'
+    env: 'dev'
 }
